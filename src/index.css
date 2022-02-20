@@ -5,3 +5,11 @@
 body {
   font-family: 'Inter', sans-serif;
 }
+
+.x-scroller {
+  overflow-x: auto;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  max-height: 534px;
+  scroll-behavior: smooth;
+}

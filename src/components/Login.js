@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import { MainContext } from '../context/MainContext';
 import LanguageLayout from './layout/LanguageLayout';
 import logo from '../images/logo.png';
 import MainImage from '../images/covidvaccinces-compressed.png';
@@ -12,7 +13,8 @@ import MainImage from '../images/covidvaccinces-compressed.png';
 function Login() {
   const { register, handleSubmit } = useForm();
   const { t, i18n } = useTranslation();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const { setUser } = useContext(MainContext);
 
   const onSubmit = (data) => {
     axios
@@ -20,7 +22,9 @@ function Login() {
         ...data,
         language: i18n.language,
       })
-      .then(() => {
+      .then((res) => {
+        localStorage.setItem('user', JSON.stringify(res.data));
+        setUser(res.data);
         navigate('/');
       })
       .catch((err) => console.error(err));
