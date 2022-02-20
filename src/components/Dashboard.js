@@ -9,14 +9,14 @@ import logo from '../images/logo.png';
 
 function Dashboard() {
   const { user } = useContext(MainContext);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [countries, setCountries] = useState([]);
-  const [statistics, setStatistics] = useState({});
-  const [page, setPage] = useState(localStorage.getItem('page') || 'wordlWide');
+  const [statistics, setStatistics] = useState(null);
+  const [page, setPage] = useState(localStorage.getItem('page') || 'worldWide');
 
   const handleLanguage = (e) => {
-    console.log(e.target.value);
+    i18n.changeLanguage(e.target.value);
   };
 
   const handlePageChange = (e) => {
@@ -51,7 +51,6 @@ function Dashboard() {
             id='location'
             name='location'
             className='mr-10 mt-1 block w-24 pl-3 pr-10 py-2 font-semibold text-lg focus:outline-none bg-white sm:text-sm rounded-md self-center'
-            defaultValue='English'
             onChange={handleLanguage}
           >
             <option value='en'>English</option>
@@ -70,8 +69,8 @@ function Dashboard() {
           <div className='flex text-lg w-56 justify-between'>
             <button
               onClick={handlePageChange}
-              value='wordlWide'
-              className={page === 'wordlWide' ? 'font-bold' : ''}
+              value='worldWide'
+              className={page === 'worldWide' ? 'font-bold' : ''}
             >
               {t('Worldwide')}
             </button>
@@ -84,8 +83,8 @@ function Dashboard() {
             </button>
           </div>
         </div>
-        {page === 'wordlWide' ? (
-          <WorldWide statistics={statistics} />
+        {page === 'worldWide' ? (
+          statistics && <WorldWide statistics={statistics} />
         ) : page === 'byCountry' ? (
           <ByCountry countries={countries} />
         ) : null}

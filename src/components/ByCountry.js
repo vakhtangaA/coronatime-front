@@ -6,7 +6,7 @@ import { default as upArrowSvg } from '../svgs/upArrowSvg.svg';
 import { default as downArrowSvg } from '../svgs/downArrowSvg.svg';
 
 function ByCountry({ countries }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [filteredCountries, setFilteredCountries] = useState(countries);
   const [sortDirection, setSortDirection] = useState('ascending');
   const [prevTerm, setPrevTerm] = useState('');
@@ -17,7 +17,7 @@ function ByCountry({ countries }) {
 
   const handleSearch = (e) => {
     const filtered = countries.filter((country) => {
-      return country.name.en
+      return country.name[i18n.language]
         .toLowerCase()
         .includes(e.target.value.toLowerCase());
     });
@@ -167,7 +167,11 @@ function ByCountry({ countries }) {
                       key={country.countryCode}
                     >
                       <td className='px-3 md:px-8 py-4 text-sm  text-gray-900 break all'>
-                        <p className='w-24 break-words'>{country.name.en}</p>
+                        <p className='w-24 break-words'>
+                          {i18n.language === 'ka'
+                            ? country.name.ka
+                            : country.name.en}
+                        </p>
                       </td>
                       <td className='px-3 md:px-8 py-4 text-sm  text-gray-900 break all'>
                         <p className='w-24 break-words'>{country.confirmed}</p>
