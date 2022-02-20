@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import LanguageLayout from './layout/LanguageLayout';
 import logo from '../images/logo.png';
@@ -12,6 +13,7 @@ import MainImage from '../images/covidvaccinces-compressed.png';
 function Register() {
   const { register, handleSubmit } = useForm();
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     axios
@@ -19,6 +21,7 @@ function Register() {
         ...data,
         language: i18n.language,
       })
+      .then(navigate('/verification-sent'))
       .catch((err) => console.log(err));
   };
   return (

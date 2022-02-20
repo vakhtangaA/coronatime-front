@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import apiClient from '../services/api';
 import { MainContext } from '../context/MainContext';
 import LanguageLayout from './layout/LanguageLayout';
 import logo from '../images/logo.png';
@@ -17,17 +18,22 @@ function Login() {
   const { setUser } = useContext(MainContext);
 
   const onSubmit = (data) => {
-    axios
-      .post(`${process.env.REACT_APP_PUBLIC_API}/api/login`, {
-        ...data,
-        language: i18n.language,
+    apiClient
+      .get(`/sanctum/csrf-cookie`)
+      .then(() => {
+        apiClient
+          .post(`${process.env.REACT_APP_PUBLIC_API}/api/login`, {
+            ...data,
+            language: i18n.language,
+          })
+          .then((res) => {
+            localStorage.setItem('user', JSON.stringify(res.data));
+            setUser(res.data);
+            navigate('/');
+          })
+          .catch((err) => console.error(err));
       })
-      .then((res) => {
-        localStorage.setItem('user', JSON.stringify(res.data));
-        setUser(res.data);
-        navigate('/');
-      })
-      .catch((err) => console.error(err));
+      .catch((err) => console.log(err));
   };
   return (
     <LanguageLayout>

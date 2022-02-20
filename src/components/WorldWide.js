@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import newCasesImage from '../images/newCases.svg';
-import recoveredImage from '../images/recovered.svg';
-import deathImage from '../images/death.svg';
+import newCasesImage from '../images/newCases.png';
+import recoveredImage from '../images/recovered.png';
+import deathImage from '../images/death.png';
 
 function WorldWide({ statistics }) {
   const { t } = useTranslation();
@@ -12,7 +12,9 @@ function WorldWide({ statistics }) {
       <div className='flex flex-col items-center justify-between flex-1 col-span-3 rounded-lg md:col-span-1 span py-14 bg-bgNewCases'>
         <img src={newCasesImage} alt='New cases' />
         <div className='flex flex-col items-center justify-center'>
-          <h3 className='mt-4 font-semibold xl:text-xl'>{t('New cases')}</h3>
+          <h3 className='mt-4 font-semibold xl:text-xl text-lg'>
+            {t('New cases')}
+          </h3>
           <h3 className='mt-4 text-3xl font-black text-blue-500 xl:text-4xl'>
             {statistics.confirmed.toLocaleString()}
           </h3>
@@ -22,7 +24,7 @@ function WorldWide({ statistics }) {
         <div className='flex flex-col items-center justify-between flex-1 col-span-1 rounded-lg py-14 bg-bgRecoveredCases'>
           <img src={recoveredImage} alt='Recovered' />
           <div className='flex flex-col items-center justify-center'>
-            <h3 className="mt-4 font-semibold xl:text-xl {{ app()->getLocale() === 'ka' ? 'text-xs' : '' }}">
+            <h3 className="mt-4 text-lg font-semibold xl:text-xl {{ app()->getLocale() === 'ka' ? 'text-xs' : '' }}">
               {t('Recovered')}
             </h3>
             <h3 className='mt-4 text-3xl font-black text-green-500 xl:text-4xl'>
@@ -33,7 +35,7 @@ function WorldWide({ statistics }) {
         <div className='flex flex-col items-center justify-between flex-1 col-span-1 rounded-lg py-14 bg-bgDeathCases'>
           <img src={deathImage} alt='Death cases' />
           <div className='flex flex-col items-center justify-center'>
-            <h3 className="mt-4 font-semibold xl:text-xl {{ app()->getLocale() === 'ka' ? 'text-xs' : '' }}">
+            <h3 className="mt-4 text-lg font-semibold xl:text-xl {{ app()->getLocale() === 'ka' ? 'text-xs' : '' }}">
               {t('Deaths')}
             </h3>
             <h3 className='mt-4 text-3xl font-black text-yellow-500 xl:text-4xl'>
