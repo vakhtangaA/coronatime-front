@@ -12,11 +12,11 @@ function WorldWide({ statistics }) {
       <div className='flex flex-col items-center justify-between flex-1 col-span-3 rounded-lg md:col-span-1 span py-14 bg-bgNewCases'>
         <img src={newCasesImage} alt='New cases' />
         <div className='flex flex-col items-center justify-center'>
-          <h3 className='mt-4 font-semibold xl:text-xl text-lg'>
+          <h3 className='mt-4 text-lg font-semibold xl:text-xl'>
             {t('New cases')}
           </h3>
           <h3 className='mt-4 text-3xl font-black text-blue-500 xl:text-4xl'>
-            {statistics.confirmed.toLocaleString()}
+            {Number(statistics.confirmed).toLocaleString()}
           </h3>
         </div>
       </div>
@@ -28,7 +28,7 @@ function WorldWide({ statistics }) {
               {t('Recovered')}
             </h3>
             <h3 className='mt-4 text-3xl font-black text-green-500 xl:text-4xl'>
-              {statistics.recovered.toLocaleString()}
+              {Number(statistics.recovered).toLocaleString()}
             </h3>
           </div>
         </div>
@@ -39,7 +39,7 @@ function WorldWide({ statistics }) {
               {t('Deaths')}
             </h3>
             <h3 className='mt-4 text-3xl font-black text-yellow-500 xl:text-4xl'>
-              {statistics.deaths.toLocaleString()}
+              {Number(statistics.deaths).toLocaleString()}
             </h3>
           </div>
         </div>
