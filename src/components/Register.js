@@ -11,7 +11,12 @@ import logo from '../images/logo.png';
 import MainImage from '../images/covidvaccinces-compressed.png';
 
 function Register() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm();
   const { i18n } = useTranslation();
   const navigate = useNavigate();
 
@@ -21,8 +26,20 @@ function Register() {
         ...data,
         language: i18n.language,
       })
-      .then(navigate('/verification-sent'))
-      .catch((err) => console.log(err));
+      .then(() => navigate('/verification-sent'))
+      .catch((err) => alert(err.response.data.message));
+  };
+
+  const authInputValidation = {
+    required: t('This field is required'),
+    minLength: {
+      value: 3,
+      message: t('Field needs to be at least 3 characters'),
+    },
+    maxLength: {
+      value: 45,
+      message: t('Field characters needs to be less than 45'),
+    },
   };
   return (
     <LanguageLayout>
@@ -37,61 +54,94 @@ function Register() {
               {t('Please enter required info to sign up')}
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className='mb-10'>
+              <div className='mt-6 mb-2'>
                 <label className='block font-bold' htmlFor='name'>
                   {t('Username')}
                 </label>
                 <div className='relative'>
                   <input
-                    className='block w-full p-4 my-2 border  rounded-lg focus:outline-none h-14'
+                    className='block w-full p-4 my-2 border rounded-lg focus:outline-none h-14'
                     type='text'
                     placeholder={t('Enter unique username')}
-                    {...register('name', { required: true })}
+                    {...register('name', authInputValidation)}
                   />
                 </div>
+                <div className='h-6'>
+                  {errors.name && (
+                    <span className='block mb-4 text-sm text-red-500'>
+                      {errors.name.message}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className='mb-10'>
+              <div className='mb-2'>
                 <label className='block font-bold' htmlFor='email'>
                   {t('Email')}
                 </label>
                 <div className='relative'>
                   <input
-                    className='block w-full p-4 my-2 border  rounded-lg focus:outline-none h-14'
+                    className='block w-full p-4 my-2 border rounded-lg focus:outline-none h-14'
                     type='text'
                     placeholder={t('Enter your email')}
-                    {...register('email', { required: true })}
+                    {...register('email', authInputValidation)}
                   />
                 </div>
+                <div className='h-6'>
+                  {errors.email && (
+                    <span className='block mb-4 text-sm text-red-500'>
+                      {errors.email.message}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className='mb-10'>
+              <div className='mb-2'>
                 <label className='block font-bold' htmlFor='name'>
                   {t('Password')}
                 </label>
                 <div className='relative'>
                   <input
-                    className='block w-full p-4 my-2 border  rounded-lg focus:outline-none h-14'
+                    className='block w-full p-4 my-2 border rounded-lg focus:outline-none h-14'
                     type='password'
                     placeholder={t('Fill in password')}
-                    {...register('password', { required: true })}
+                    {...register('password', authInputValidation)}
                   />
                 </div>
+                <div className='h-6'>
+                  {errors.password && (
+                    <span className='block mb-4 text-sm text-red-500'>
+                      {errors.password.message}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className='mb-10'>
+              <div className='mb-2'>
                 <label className='block font-bold' htmlFor='name'>
                   {t('Repeat Password')}
                 </label>
                 <div className='relative'>
                   <input
-                    className='block w-full p-4 my-2 border  rounded-lg focus:outline-none h-14'
+                    className='block w-full p-4 my-2 border rounded-lg focus:outline-none h-14'
                     type='password'
                     placeholder={t('Repeat Password')}
-                    {...register('repeat_password', { required: true })}
+                    {...register('repeat_password', {
+                      ...authInputValidation,
+                      validate: (value) =>
+                        value === getValues().password ||
+                        t('Passwords does not match'),
+                    })}
                   />
                 </div>
+                <div className='h-6'>
+                  {errors.repeat_password && (
+                    <span className='block mb-4 text-sm text-red-500'>
+                      {errors.repeat_password.message}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className='mb-10 flex justify-between'>
+              <div className='flex justify-between mb-10'>
                 <div className='flex items-center justify-between'>
-                  <div className='flex items-center flex-row-reverse'>
+                  <div className='flex flex-row-reverse items-center'>
                     <label
                       className='container my-2 text-sm font-semibold'
                       htmlFor='remember'
@@ -117,7 +167,7 @@ function Register() {
                 {t('Already have an account?')}
                 <Link
                   to='/login'
-                  className='font-bold text-black hover:underline ml-2'
+                  className='ml-2 font-bold text-black hover:underline'
                 >
                   {t('Log in')}
                 </Link>

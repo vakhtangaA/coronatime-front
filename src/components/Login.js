@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import apiClient from '../services/api';
@@ -12,10 +11,26 @@ import logo from '../images/logo.png';
 import MainImage from '../images/covidvaccinces-compressed.png';
 
 function Login() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { setUser } = useContext(MainContext);
+
+  const authInputValidation = {
+    required: t('This field is required'),
+    minLength: {
+      value: 3,
+      message: t('Field needs to be at least 3 characters'),
+    },
+    maxLength: {
+      value: 45,
+      message: t('Field characters needs to be less than 45'),
+    },
+  };
 
   const onSubmit = (data) => {
     apiClient
@@ -57,35 +72,49 @@ function Login() {
               </span>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className='mb-10'>
+              <div className='mb-2'>
                 <label className='block font-bold' htmlFor='name'>
                   {t('Username or Email')}
                 </label>
                 <div className='relative'>
                   <input
-                    className='block w-full p-4 my-2 border  rounded-lg focus:outline-none h-14'
+                    className='block w-full p-4 my-2 border rounded-lg focus:outline-none h-14'
                     type='text'
                     placeholder={t('Enter username or email')}
-                    {...register('name', { required: true })}
+                    {...register('name', authInputValidation)}
                   />
                 </div>
+                <div className='h-6'>
+                  {errors.name && (
+                    <span className='block mb-4 text-sm text-red-500'>
+                      {errors.name.message}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className='mb-10'>
+              <div className='mb-2'>
                 <label className='block font-bold' htmlFor='name'>
                   {t('Password')}
                 </label>
                 <div className='relative'>
                   <input
-                    className='block w-full p-4 my-2 border  rounded-lg focus:outline-none h-14'
+                    className='block w-full p-4 my-2 border rounded-lg focus:outline-none h-14'
                     type='password'
                     placeholder={t('Fill in password')}
-                    {...register('password', { required: true })}
+                    {...register('password', authInputValidation)}
                   />
                 </div>
+                <div className='h-6'>
+                  {errors.password && (
+                    <span className='block mb-4 text-sm text-red-500'>
+                      {errors.password.message}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className='mb-10 flex justify-between'>
+              <div className='flex justify-between mb-10'>
                 <div className='flex items-center justify-between'>
-                  <div className='flex items-center flex-row-reverse'>
+                  <div className='flex flex-row-reverse items-center'>
                     <label
                       className='container my-2 text-sm font-semibold'
                       htmlFor='remember'
@@ -101,7 +130,7 @@ function Login() {
                 </div>
                 <Link
                   to=''
-                  className='font-semibold text-blue-600 my-auto'
+                  className='my-auto font-semibold text-blue-600'
                   href="{{ route('password.email', app()->getLocale()) }}"
                 >
                   {t('Forgot password?')}
@@ -118,7 +147,7 @@ function Login() {
                 {t("Don't have an account?")}
                 <Link
                   to='/register'
-                  className='font-bold text-black hover:underline ml-2'
+                  className='ml-2 font-bold text-black hover:underline'
                 >
                   {t('Sign up for free')}
                 </Link>

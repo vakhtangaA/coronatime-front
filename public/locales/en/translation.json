@@ -67,5 +67,9 @@
   "Cancel": "Cancel",
   "if your are lazy to register": "if your are lazy to register",
   "name: admin, password: admin": "name: admin, password: admin",
-  "REGISTER": "REGISTER"
+  "REGISTER": "REGISTER",
+  "This field is required": "This field is required",
+  "Field needs to be at least 3 characters": "Field needs to be at least 3 characters",
+  "Field characters needs to be less than 40": "Field characters needs to be less than 40",
+  "Passwords does not match": "Passwords does not match"
 }

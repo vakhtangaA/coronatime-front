@@ -5,6 +5,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import VerificationLinkSent from './components/VerificationLinkSent';
+import VerificationSuccess from './components/VerificationSuccess';
 import './App.css';
 
 function App() {
@@ -16,6 +17,10 @@ function App() {
         <Route
           path='verification-sent'
           element={<VerificationLinkSent />}
+        ></Route>
+        <Route
+          path='verification-success'
+          element={<VerificationSuccess />}
         ></Route>
         <Route path='/' element={<Dashboard />}></Route>
       </Routes>

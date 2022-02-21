@@ -68,5 +68,9 @@
   "Cancel": "გაუქმება",
   "if your are lazy to register": "თუ დარეგისტრირება არ გნებავთ",
   "name: admin, password: admin": "სახელი: admin, პაროლი: admin",
-  "REGISTER": "დარეგისტრირდი"
+  "REGISTER": "დარეგისტრირდი",
+  "This field is required": "ველის შევსება აუცილებელია",
+  "Field needs to be at least 3 characters": "ველი უნდა იყოს მინიმუმ 3 სიმბოლო",
+  "Field characters needs to be less than 40": "სიმბოლოების რაოდენობა არ უნდა აღემატებოდეს 45 - ს",
+  "Passwords does not match": "პაროლები არ ემთხვევა ერთმანეთს"
 }
