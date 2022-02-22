@@ -27,7 +27,7 @@ function Register() {
         language: i18n.language,
       })
       .then(() => navigate('/verification-sent'))
-      .catch((err) => alert(err.response.data.message));
+      .catch((err) => alert(err.response.data.errors.email));
   };
 
   const authInputValidation = {

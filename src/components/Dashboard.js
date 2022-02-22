@@ -7,13 +7,14 @@ import ByCountry from './ByCountry';
 import WorldWide from './WorldWide';
 import { MainContext } from '../context/MainContext';
 import logo from '../images/logo.png';
+import apiClient from '../services/api';
 
 function Dashboard() {
   const { user } = useContext(MainContext);
   const { t, i18n } = useTranslation();
+
   const navigate = useNavigate();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [isLoading, setisLoading] = useState(true);
   const [countries, setCountries] = useState([]);
   const [statistics, setStatistics] = useState(null);
@@ -47,76 +48,72 @@ function Dashboard() {
       .catch((err) => console.log(err));
   }, []);
 
-  useEffect(() => {
-    if (localStorage.getItem('user')) {
-      setIsLoggedIn(true);
-    }
-
-    if (!localStorage.getItem('user') && !isLoggedIn) {
-      navigate('login');
-    }
-  }, [navigate, isLoggedIn]);
-
   const handleLogout = () => {
+    apiClient
+      .post(`/api/logout`)
+      .then(() => console.log('logged out'))
+      .catch((err) => console.log(err));
+
     localStorage.removeItem('user');
-    setIsLoggedIn(false);
+
+    navigate('/login');
   };
 
-  return !isLoading
-    ? isLoggedIn && (
-        <div className='px-24'>
-          <div className='flex items-center justify-between m-auto my-6 width90'>
-            <img src={logo} alt='Coronatime logo' />
-            <div className='flex'>
-              <select
-                id='location'
-                name='location'
-                className='mr-10 mt-1 block w-24 pl-3 pr-10 py-2 font-semibold text-lg focus:outline-none bg-white sm:text-sm rounded-md self-center'
-                defaultValue={i18n.language === 'ka' ? 'ka' : 'en'}
-                onChange={handleLanguage}
-              >
-                <option value='en'>English</option>
-                <option value='ka'>Georgian</option>
-              </select>
-              <h2 className='text-lg font-bold self-center'>{user?.name}</h2>
+  return (
+    !isLoading && (
+      <div className='px-24'>
+        <div className='flex items-center justify-between m-auto my-6 width90'>
+          <img src={logo} alt='Coronatime logo' />
+          <div className='flex'>
+            <select
+              id='location'
+              name='location'
+              className='self-center block w-24 py-2 pl-3 mt-1 mr-10 text-lg font-semibold bg-white rounded-md focus:outline-none sm:text-sm'
+              defaultValue={i18n.language === 'ka' ? 'ka' : 'en'}
+              onChange={handleLanguage}
+            >
+              <option value='en'>English</option>
+              <option value='ka'>Georgian</option>
+            </select>
+            <h2 className='self-center text-lg font-bold'>{user?.name}</h2>
+            <button
+              className='w-auto pl-4 ml-4 text-red-300 border-l'
+              onClick={handleLogout}
+            >
+              {t('Log Out')}
+            </button>
+          </div>
+        </div>
+        <hr />
+        <div className='w-full mt-12 text-2xl font-extrabold'>
+          <h2 className='mb-12 '>{t('Worldwide Statistics')}</h2>
+          <div className='pb-6 border-b-2 mb-14'>
+            <div className='flex justify-between w-56 text-lg'>
               <button
-                className='ml-4 border-l pl-4 w-auto text-red-300'
-                onClick={handleLogout}
+                onClick={handlePageChange}
+                value='worldWide'
+                className={page === 'worldWide' ? 'font-bold' : ''}
               >
-                {t('Log Out')}
+                {t('Worldwide')}
+              </button>
+              <button
+                onClick={handlePageChange}
+                value='byCountry'
+                className={page === 'byCountry' ? 'font-bold' : ''}
+              >
+                {t('By country')}
               </button>
             </div>
           </div>
-          <hr />
-          <div className='mt-12 font-extrabold text-2xl w-full'>
-            <h2 className='mb-12 '>{t('Worldwide Statistics')}</h2>
-            <div className='border-b-2 pb-6 mb-14'>
-              <div className='flex text-lg w-56 justify-between'>
-                <button
-                  onClick={handlePageChange}
-                  value='worldWide'
-                  className={page === 'worldWide' ? 'font-bold' : ''}
-                >
-                  {t('Worldwide')}
-                </button>
-                <button
-                  onClick={handlePageChange}
-                  value='byCountry'
-                  className={page === 'byCountry' ? 'font-bold' : ''}
-                >
-                  {t('By country')}
-                </button>
-              </div>
-            </div>
-            {page === 'worldWide' ? (
-              statistics && <WorldWide statistics={statistics} />
-            ) : page === 'byCountry' ? (
-              <ByCountry countries={countries} />
-            ) : null}
-          </div>
+          {page === 'worldWide' ? (
+            statistics && <WorldWide statistics={statistics} />
+          ) : page === 'byCountry' ? (
+            <ByCountry countries={countries} />
+          ) : null}
         </div>
-      )
-    : '';
+      </div>
+    )
+  );
 }
 
 export default Dashboard;

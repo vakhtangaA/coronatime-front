@@ -71,5 +71,7 @@
   "This field is required": "This field is required",
   "Field needs to be at least 3 characters": "Field needs to be at least 3 characters",
   "Field characters needs to be less than 40": "Field characters needs to be less than 40",
-  "Passwords does not match": "Passwords does not match"
+  "Passwords does not match": "Passwords does not match",
+  "Verification Link Sent": "Verification Link Sent",
+  "Your account is verified": "Your account is verified"
 }
