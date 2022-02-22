@@ -129,7 +129,7 @@ function Login() {
                   </div>
                 </div>
                 <Link
-                  to=''
+                  to='/forgot-password'
                   className='my-auto font-semibold text-blue-600'
                   href="{{ route('password.email', app()->getLocale()) }}"
                 >

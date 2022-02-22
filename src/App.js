@@ -8,6 +8,10 @@ import VerificationLinkSent from './components/VerificationLinkSent';
 import VerificationSuccess from './components/VerificationSuccess';
 import PrivatePage from './components/PrivatePage';
 import GuestPage from './components/GuestPage';
+import ForgotPassword from './components/ForgotPassword';
+import PasswordResetLinkSent from './components/PasswordResetLinkSent';
+import SetNewPassword from './components/SetNewPassword';
+import PasswordReseted from './components/PasswordReseted';
 import './App.css';
 
 function App() {
@@ -43,6 +47,38 @@ function App() {
           element={
             <GuestPage>
               <VerificationSuccess />
+            </GuestPage>
+          }
+        ></Route>
+        <Route
+          path='password-reset-sent'
+          element={
+            <GuestPage>
+              <PasswordResetLinkSent />
+            </GuestPage>
+          }
+        ></Route>
+        <Route
+          path='forgot-password'
+          element={
+            <GuestPage>
+              <ForgotPassword />
+            </GuestPage>
+          }
+        ></Route>
+        <Route
+          path='reset-password/:hash'
+          element={
+            <GuestPage>
+              <SetNewPassword />
+            </GuestPage>
+          }
+        ></Route>
+        <Route
+          path='password-reseted'
+          element={
+            <GuestPage>
+              <PasswordReseted />
             </GuestPage>
           }
         ></Route>
