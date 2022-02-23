@@ -51,12 +51,10 @@ function Dashboard() {
   const handleLogout = () => {
     apiClient
       .post(`/api/logout`)
-      .then(() => console.log('logged out'))
+      .then(() => navigate('/login'))
       .catch((err) => console.log(err));
 
     localStorage.removeItem('user');
-
-    navigate('/login');
   };
 
   return (

@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8ed3af37.css",
+    "main.js": "/static/js/main.777f260c.js",
+    "static/media/covidvaccinces-compressed.png": "/static/media/covidvaccinces-compressed.391f39909c9abb2714d5.png",
+    "index.html": "/index.html",
+    "static/media/getFetch.cjs": "/static/media/getFetch.c780682470504fffbd04.cjs",
+    "static/media/searchSvg.svg": "/static/media/searchSvg.a70bd5eb5c567cbf4dd1f02e3abd08be.svg",
+    "static/media/upArrowSvg.svg": "/static/media/upArrowSvg.6a28ea9062d2591ad1f6bafe837cfa05.svg",
+    "static/media/downArrowSvg.svg": "/static/media/downArrowSvg.2dcaa4a0ceb3cce12b988ce218af61da.svg",
+    "main.8ed3af37.css.map": "/static/css/main.8ed3af37.css.map",
+    "main.777f260c.js.map": "/static/js/main.777f260c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8ed3af37.css",
+    "static/js/main.777f260c.js"
+  ]
+}
