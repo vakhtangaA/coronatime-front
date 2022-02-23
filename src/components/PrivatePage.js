@@ -7,16 +7,18 @@ const PrivatePage = ({ children }) => {
   const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
-    apiClient
-      .get(`api/is-logged`)
-      .then((res) => {
-        setiIsLoggedIn(res.data.isLoggedIn);
-        setisLoading(false);
-      })
-      .catch((err) => {
-        setisLoading(false);
-        console.error(err);
-      });
+    setTimeout(() => {
+      apiClient
+        .get(`api/is-logged`)
+        .then((res) => {
+          setiIsLoggedIn(res.data.isLoggedIn);
+          setisLoading(false);
+        })
+        .catch((err) => {
+          setisLoading(false);
+          console.error(err);
+        });
+    }, 500);
   }, []);
 
   if (isLoading) {
