@@ -3,18 +3,18 @@ import { Navigate } from 'react-router-dom';
 import apiClient from '../services/api';
 
 const GuestPage = ({ children }) => {
-  const [isLoggedIn, setiIsLoggedIn] = useState(null);
-  const [isLoading, setisLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     apiClient
       .get(`api/is-logged`)
       .then((res) => {
-        setiIsLoggedIn(res.data.isLoggedIn);
-        setisLoading(false);
+        setIsLoggedIn(res.data.isLoggedIn);
+        setIsLoading(false);
       })
       .catch((err) => {
-        setisLoading(false);
+        setIsLoading(false);
         console.error(err);
       });
   }, []);

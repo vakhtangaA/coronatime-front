@@ -3,19 +3,19 @@ import { Navigate } from 'react-router-dom';
 import apiClient from '../services/api';
 
 const PrivatePage = ({ children }) => {
-  const [isLoggedIn, setiIsLoggedIn] = useState(null);
-  const [isLoading, setisLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       apiClient
         .get(`api/is-logged`)
         .then((res) => {
-          setiIsLoggedIn(res.data.isLoggedIn);
-          setisLoading(false);
+          setIsLoggedIn(res.data.isLoggedIn);
+          setIsLoading(false);
         })
         .catch((err) => {
-          setisLoading(false);
+          setIsLoading(false);
           console.error(err);
         });
     }, 500);
@@ -25,7 +25,7 @@ const PrivatePage = ({ children }) => {
     return <h2>waiting...</h2>;
   }
 
-  return !!isLoggedIn === true ? children : <Navigate to='/login' replace />;
+  return !!isLoggedIn ? children : <Navigate to='/login' replace />;
 };
 
 export default PrivatePage;

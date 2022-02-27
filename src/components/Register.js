@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import apiClient from '../services/api';
 import LanguageLayout from './layout/LanguageLayout';
 import logo from '../images/logo.png';
 import MainImage from '../images/covidvaccinces-compressed.png';
@@ -21,13 +22,18 @@ function Register() {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    axios
-      .post(`${process.env.REACT_APP_PUBLIC_API}/api/register`, {
+    apiClient
+      .post(`/api/register`, {
         ...data,
         language: i18n.language,
       })
       .then(() => navigate('/verification-sent'))
-      .catch((err) => alert(err.response.data.errors.email));
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response.data?.errors) {
+          alert(err.response.data.errors.email);
+        }
+      });
   };
 
   const authInputValidation = {
@@ -178,7 +184,7 @@ function Register() {
         <div className='hidden h-full lg:block lg:w-2/5 logo max-w-604px'>
           <img
             src={MainImage}
-            alt='Covid vaccinces'
+            alt='Covid vaccine'
             className='w-full max-h-screen min-h-screen'
           />
         </div>
